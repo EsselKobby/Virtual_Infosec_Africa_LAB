@@ -366,7 +366,7 @@ The resulted payload was then saved in the *payload.cmd*, The Python server payl
 ###### Table1: Common Vulnerability Scoring System Version 3.0
 
 ---
-###### Summary of Vulnerability Findings
+## Summary of Vulnerability Findings
 
 
 |     Finding              |     Severity                |

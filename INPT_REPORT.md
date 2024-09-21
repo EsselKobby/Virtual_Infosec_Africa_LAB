@@ -364,3 +364,17 @@ The resulted payload was then saved in the *payload.cmd*, The Python server payl
 |**Criticial**       | 9.0 - 10.0  |
 
 ###### Table1: Common Vulnerability Scoring System Version 3.0
+
+---
+###### Summary of Vulnerability Findings
+
+
+|     Finding              |     Severity                |
+|  ---                   |    ---                    |
+|Remote Code Execution (RCE) for apache 2.4.49 | High       |
+|Denial of Service (DoS) in apache |  High                  |
+|SQL injection via crafted parameters leading to unauthorized access | Medium |
+|Improper input validation of access passwords | Medium |
+|Arbitrary code execution on VNC server | High          |
+
+*Table*: *Some Common Vulnerability Findings* 

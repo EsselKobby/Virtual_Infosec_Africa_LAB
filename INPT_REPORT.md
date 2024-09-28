@@ -7,7 +7,7 @@ Author:
 Bernard Kobina Forson Essel
 
 
-[Github Url](https://github.com/EsselKobby/VIA-LAB)
+[Source](https://github.com/EsselKobby/VIA-LAB)
 
 ___
 

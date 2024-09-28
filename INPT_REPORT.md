@@ -3,7 +3,7 @@
 ###### Ethical Hacking Bootcamp
 [Virtual Infosec Africa,](https://virtualinfosecafrica.com) [Department of Telecommunications Engineering](https://teleng.knust.edu.gh/)
 ___
-Submitted by:
+Author:
 Bernard Kobina Forson Essel
 
 

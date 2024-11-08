@@ -1,0 +1,11 @@
+msoffcrypto-tool
+pyzipper
+PyPDF2
+colorama
+tqdm
+tabulate
+requests
+Pillow
+tk
+
+###### NB:I didn't specify the exact version so as to download the exact module with respect to the user's python version to run them.

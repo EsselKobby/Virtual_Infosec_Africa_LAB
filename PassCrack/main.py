@@ -127,19 +127,19 @@ def read_file_lines(file_path):
             continue
     raise ValueError(f"failed to decode file {file_path} with files encodings")
 
-# Section 3: UI Update Functions
+# UI Update Functions
 
 
-# Step 12: Define a function to update the progress message
+#Progress message update function
 def update_progress(message):
     progress_var.set(message)
 
-# Step 12.1: Define a function to update the main log
+# Main log function update
 def update_log(message):
     output_log.insert(tk.END, message + "\n")
     output_log.see(tk.END)
 
-# Step 12.2: Define a function to update the results log
+#Log results update function
 def update_results_log(message, success=False):
     if success:
         results_log.tag_configure("success", foreground="green")
@@ -148,7 +148,7 @@ def update_results_log(message, success=False):
         results_log.insert(tk.END, message + "\n")
     results_log.see(tk.END)
 
-# Step 12.3: Define a function to update the progress bar and ETA label
+# Progress bar and ETA label update function
 def update_progress_bar(current, total, start_time):
     progress_percentage = min(100, (current / total) * 100)
     progress_bar['value'] = progress_percentage
@@ -162,7 +162,7 @@ def update_progress_bar(current, total, start_time):
         eta_label.config(text="Estimated Time Remaining: 0 min 0 sec")
     root.update_idletasks()
 
-# Step 12.4: Define a function to summarize the results and update the log
+# summarize the results and update of the log function
 def summary_results():
     global results
     if results:
@@ -171,7 +171,7 @@ def summary_results():
         update_progress("Attack stopped and results summarized.")
         logging.info("Attack stopped and results summarized.")
 
-# Step 13: Define a function to clear the attack results and reset the UI
+#  Clearing of  attack results and reset of the UI function
 def clear_attack():
     global stop_flag, results
     stop_flag = False

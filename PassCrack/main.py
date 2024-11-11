@@ -184,9 +184,9 @@ def clear_attack():
     eta_label.config(text="Estimated Time Remaining: N/A")
     logging.info("Attack cleared.")
 
-# Section 4: Attack Functions
+# Attack Functions
 
-# Step 14: Define the brute force attack function
+# Brute force attack definition function
 def brute_force(file_path, file_type, max_length=6, charset=string.ascii_lowercase):
     global results
     try:
@@ -232,4 +232,3 @@ def brute_force(file_path, file_type, max_length=6, charset=string.ascii_lowerca
         logging.info("Process interrupted by user.")
         summary_results()
     return None
-

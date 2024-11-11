@@ -378,3 +378,80 @@ def reverse_brute_force(url, usernames_file, common_passwords_file):
         logging.info("Process interrupted by user.")
         summary_results()
     return None
+
+
+# GUI Setup Functions
+
+# Function to update the UI based on the selected attack type
+def update_ui():
+    attack_type = attack_type_var.get()
+    file_type_frame.grid_remove()
+    brute_force_frame.grid_remove()
+    dictionary_frame.grid_remove()
+    reverse_brute_force_frame.grid_remove()
+
+    if attack_type in ['brute_force', 'dictionary']:
+        file_type_frame.grid(row=1, column=0, columnspan=3, pady=5, padx=5, sticky="ew")
+    if attack_type == 'brute_force':
+        brute_force_frame.grid(row=2, column=0, columnspan=3, pady=5, padx=5, sticky="ew")
+    elif attack_type == 'dictionary':
+        dictionary_frame.grid(row=2, column=0, columnspan=3, pady=5, padx=5, sticky="ew")
+    elif attack_type == 'reverse_brute_force':
+        reverse_brute_force_frame.grid(row=2, column=0, columnspan=3, pady=5, padx=5, sticky="ew")
+
+# function to open a file dialog to select a file
+def browse_file(entry):
+    filename = filedialog.askopenfilename()
+    entry.delete(0, tk.END)
+    entry.insert(0, filename)
+
+# function to run the selected attack
+def run_attack():
+    global stop_flag, results
+    stop_flag = False
+    results = []
+    attack_type = attack_type_var.get()
+    file_type = file_type_var.get()
+
+    if attack_type in ['brute_force', 'dictionary']:
+        file_path = file_path_entry.get() if attack_type == 'brute_force' else file_path_entry_dict.get()
+        if not file_path or not os.path.isfile(file_path):
+            update_progress("Invalid file path.")
+            return
+
+    if attack_type == 'brute_force':
+        try:
+            max_length = int(max_length_entry.get())
+        except ValueError:
+            update_progress("Invalid maximum length. Please enter a numeric value.")
+            return
+        charset = charset_entry.get() or string.ascii_lowercase
+        threading.Thread(target=brute_force, args=(file_path, file_type, max_length, charset)).start()
+
+    elif attack_type == 'dictionary':
+        dictionary_file = dictionary_file_entry.get()
+        if not dictionary_file or not os.path.isfile(dictionary_file):
+            update_progress("Invalid dictionary file path.")
+            return
+        threading.Thread(target=dictionary_attack, args=(file_path, file_type, dictionary_file)).start()
+
+    elif attack_type == 'reverse_brute_force':
+        url = url_entry.get()
+        usernames_file = usernames_file_entry.get()
+        common_passwords_file = common_passwords_file_entry.get()
+        if not url or not usernames_file or not os.path.isfile(usernames_file) or not common_passwords_file or not os.path.isfile(common_passwords_file):
+            update_progress("Invalid input. Please ensure all fields are filled correctly.")
+            return
+        threading.Thread(target=reverse_brute_force, args=(url, usernames_file, common_passwords_file)).start()
+
+# Define a function to stop the current attack
+def stop_attack():
+    global stop_flag
+    stop_flag = True
+    update_progress("Stopping the attack...")
+    summary_results()
+
+# Step 21: Define a function to handle the window closing event
+def on_closing():
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        root.destroy()

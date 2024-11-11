@@ -232,3 +232,76 @@ def brute_force(file_path, file_type, max_length=6, charset=string.ascii_lowerca
         logging.info("Process interrupted by user.")
         summary_results()
     return None
+
+
+# Step 15: Define the dictionary attack function
+def dictionary_attack(file_path, file_type, dictionary_file):
+    global results
+    try:
+        start_time = time.time()  # Record the start time
+        results = []  # Initialize the results list
+        attempt_counter = 0  # Initialize the attempt counter
+
+        try:
+            passwords = read_file_lines(dictionary_file)  # Read passwords from dictionary file
+        except FileNotFoundError:
+            update_progress(f"Dictionary file '{dictionary_file}' not found.")
+            return None
+        except ValueError as e:
+            update_progress(str(e))
+            return None
+
+        total_attempts = len(passwords)  # Calculate total attempts
+        password_found = False  # Initialize the password found flag
+
+        with ThreadPoolExecutor(max_workers=10) as executor:  # Create a thread pool
+            futures = []
+            with tqdm(total=total_attempts, desc="Dictionary Attack Progress", unit="attempt", dynamic_ncols=True) as pbar:
+                for i in range(0, total_attempts, 10):  # Process passwords in batches of 10
+                    if password_found or stop_flag:
+                        break
+                    batch = passwords[i:i + 10]
+                    future = executor.submit(attempt_passwords, file_path, file_type, batch, results, i)
+                    futures.append(future)
+                    attempt_counter += len(batch)  # Increment the attempt counter by batch size
+                    pbar.update(len(batch))  # Update the progress bar
+                    results.extend([[i + j, pw, "Unsuccessful"] for j, pw in enumerate(batch)])  # Append unsuccessful attempts
+                    table = tabulate(results[-100:], headers=["Attempt", "Password", "Status"], tablefmt="grid")
+                    update_log(table)
+                    update_progress_bar(attempt_counter, total_attempts, start_time)
+                    root.update_idletasks()
+
+                for future in as_completed(futures):  # Check results of futures
+                    password = future.result()
+                    if password:
+                        password_found = True  # Set password found flag
+                        end_time = time.time()  # Record the end time
+                        results.append([attempt_counter, password, "Success"])  # Append successful attempt
+                        table = tabulate(results, headers=["Attempt", "Password", "Status"], tablefmt="grid")
+                        update_log(table)
+                        update_results_log(f"Password found: {password} for file: {file_path}\nTime taken: {end_time - start_time} seconds\nAttempts made: {attempt_counter}", success=True)
+                        logging.info(f"Password found: {password}")
+                        logging.info(f"Time taken: {end_time - start_time} seconds")
+                        logging.info(f"Attempts made: {attempt_counter}")
+                        update_progress_bar(total_attempts, total_attempts, start_time)
+                        eta_label.config(text="Estimated Time Remaining: 0 min 0 sec")
+                        root.update_idletasks()
+                        return password
+                    if stop_flag:
+                        summary_results()
+                        return None
+                    attempt_counter += 1  # Increment the attempt counter
+                    pbar.set_postfix({"Attempts": attempt_counter})
+                    table = tabulate(results[-100:], headers=["Attempt", "Password", "Status"], tablefmt="grid")
+                    update_log(table)
+                    update_progress_bar(attempt_counter, total_attempts, start_time)
+                    root.update_idletasks()
+
+        update_results_log("Password not found.")
+        logging.info("Password not found.")
+        update_progress_bar(total_attempts, total_attempts, start_time)
+    except KeyboardInterrupt:
+        update_progress("Process interrupted by user.")
+        logging.info("Process interrupted by user.")
+        summary_results()
+    return None

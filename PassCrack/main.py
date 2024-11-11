@@ -183,3 +183,53 @@ def clear_attack():
     progress_label.config(text="Progress: 0%")
     eta_label.config(text="Estimated Time Remaining: N/A")
     logging.info("Attack cleared.")
+
+# Section 4: Attack Functions
+
+# Step 14: Define the brute force attack function
+def brute_force(file_path, file_type, max_length=6, charset=string.ascii_lowercase):
+    global results
+    try:
+        start_time = time.time()  # Record the start time
+        attempt_counter = 0  # Initialize the attempt counter
+        results = []  # Initialize the results list
+        total_attempts = sum(len(charset) ** i for i in range(1, max_length + 1))  # Calculate total attempts
+
+        with tqdm(total=total_attempts, desc="Brute Force Progress", unit="attempt", dynamic_ncols=True) as pbar:
+            for length in range(1, max_length + 1):  # Loop through each password length
+                for attempt in product(charset, repeat=length):  # Generate all combinations of the given length
+                    if stop_flag:  # Check if the stop flag is set
+                        update_progress("Process interrupted by user.")
+                        logging.info("Process interrupted by user.")
+                        summary_results()
+                        return None
+                    password = ''.join(attempt)  # Join the characters to form a password
+                    attempt_counter += 1  # Increment the attempt counter
+                    if try_password(file_path, file_type, password):  # Try the generated password
+                        end_time = time.time()  # Record the end time
+                        results.append([attempt_counter, password, "Success"])  # Append successful attempt
+                        table = tabulate(results, headers=["Attempt", "Password", "Status"], tablefmt="grid")
+                        update_log(table)
+                        update_results_log(f"Password found: {password} for file: {file_path}\nTime taken: {end_time - start_time} seconds\nAttempts made: {attempt_counter}", success=True)
+                        logging.info(f"Password found: {password}")
+                        logging.info(f"Time taken: {end_time - start_time} seconds")
+                        logging.info(f"Attempts made: {attempt_counter}")
+                        update_progress_bar(total_attempts, total_attempts, start_time)
+                        eta_label.config(text="Estimated Time Remaining: 0 min 0 sec")
+                        root.update_idletasks()
+                        return password
+                    pbar.update(1)  # Update the progress bar
+                    results.append([attempt_counter, password, "Unsuccessful"])  # Append unsuccessful attempt
+                    table = tabulate(results[-100:], headers=["Attempt", "Password", "Status"], tablefmt="grid")
+                    update_log(table)
+                    update_progress_bar(attempt_counter, total_attempts, start_time)
+                    root.update_idletasks()
+        update_results_log("Password not found.")
+        logging.info("Password not found.")
+        update_progress_bar(total_attempts, total_attempts, start_time)
+    except KeyboardInterrupt:
+        update_progress("Process interrupted by user.")
+        logging.info("Process interrupted by user.")
+        summary_results()
+    return None
+

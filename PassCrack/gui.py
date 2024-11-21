@@ -31,7 +31,7 @@ main_frame.grid(row=0, column=0, sticky="nsew")
 
 # UI Components styling
 style = ttk.Style()
-style.configure("TLabel", background="#05050F", foreground="#FFD700")
+style.configure("TLabel", background="#05050F", foreground="#ff0000")
 style.configure("TFrame", background="#05050F")
 style.configure("TButton", background="black", foreground="red", bordercolor="#009933", focusthickness=3, focuscolor="none")
 style.configure("Green.Horizontal.TProgressbar", troughcolor='#151525', background='#00FF00', bordercolor='#05050F')

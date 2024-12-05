@@ -260,7 +260,7 @@ The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the re
 
 
 ###### rdp MICROSOFT TERMINAL SERVICES (rdp)
-*rdp  Analysis*
+*rdp Analysis*
 
 |Current Rating|CVSS            |
 |    ---       |   ---          |

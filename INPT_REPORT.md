@@ -67,7 +67,7 @@ Initially, Nmap was used for host and service discovery, revealing several activ
 Following this, Metasploit was employed for vulnerability scanning, uncovering multiple security weaknesses. Notably, several high-risk vulnerabilities were detected, including unpatched software and misconfigured services that could be exploited by attackers to gain unauthorized access to the network.
 
 To assess the web application security, Eyewitness was utilized to document and analyze the web-based services. This analysis pinpointed several web applications with known vulnerabilities and improper configurations, potentially allowing sensitive data exposure or system compromise.
-The findings highlight significant security gaps that need to be addressed promptly. The detailed report includes specific recommendations for patch management, service hardening, and web application security improvements to enhance the network's overall security posture.
+The findings highlight significant security gaps that need to be addressed promptly. The detailed report includes specific recommendations for patch management, service hardening, and web application security improvements to enhance the network's overall security posture
 
 ___
 ### Analysis of Overall Security Posture

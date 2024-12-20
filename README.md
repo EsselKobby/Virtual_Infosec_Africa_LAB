@@ -378,3 +378,10 @@ The resulted payload was then saved in the *payload.cmd*, The Python server payl
 |Arbitrary code execution on VNC server | High          |
 
 *Table*: *Some Common Vulnerability Findings* 
+
+**Snapshot of the PassCrack Program**
+
+![dictionary attack](/PassCrack/dictionary%20program%20.png)
+
+![reverse brute attack](/PassCrack/reverse%20brute%20program.png)
+

@@ -92,3 +92,9 @@ This attack uses a common password against a list of potential usernames. It tar
 
 **The Graphical User Interface**
 I used tkinter module to aid in the graphical user interface of the app,the source code for the graphical interface is in the **gui.py** file.
+
+**Snapshot of the PassCrack Program**
+
+![dictionary attack](/PassCrack/dictionary%20program%20.png)
+
+![reverse brute attack](/PassCrack/reverse%20brute%20program.png)

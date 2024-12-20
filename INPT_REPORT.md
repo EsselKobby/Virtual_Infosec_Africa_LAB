@@ -4,7 +4,7 @@
 [Virtual Infosec Africa,](https://virtualinfosecafrica.com) [Department of Telecommunications Engineering](https://teleng.knust.edu.gh/)
 ___
 Author:
-Bernard Kobina Forson Essel
+Bernard Kobina Forson Essel.
 
 
 [Source](https://github.com/EsselKobby/VIA-LAB)
@@ -194,12 +194,12 @@ The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the HT
 |    ---       |   ---          |
 |    Medium      |         4.3    |
 
-##### Finding Summary
+##### Finding Summary.
 
 The MySQL version running on the remote host is 5.6.x, up to and including 5.6.48, and is affected by several vulnerabilities. The **CVE-2020-14539** vulnerability in the MySQL Server's optimizer allows a low-privileged attacker with network access to cause a denial of service by making the server hang or crash. The **CVE-2020-14550** affects the MySQL Client's C API, enabling a similar denial of service attack. Additionally, **CVE-2020-1967** impacts MySQL Connectors using OpenSSL, where an unauthenticated attacker with network access via TLS can also cause a denial of service. These issues affect MySQL versions up to 5.6.48, 5.7.30, and 8.0.20, and have been identified based on the reported version number, as Nessus has not directly tested these vulnerabilities.
 
 
-##### Evidence
+##### Evidence.
 
 The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the mySql server which is shown below:
 
@@ -260,7 +260,7 @@ The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the re
 
 
 ###### rdp MICROSOFT TERMINAL SERVICES (rdp)
-*rdp  Analysis*
+*rdp Analysis*
 
 |Current Rating|CVSS            |
 |    ---       |   ---          |
@@ -272,7 +272,7 @@ The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the re
 The various xrdp(Remote Desktop Protocol) versions prior to 0.10.0 are vulnerable to **CVE-2024-39917**, which allows attackers to bypass the `MaxLoginRetry` configuration parameter and make an infinite number of login attempts. In FreeRDP, **CVE-2023-40576** involves an Out-Of-Bounds Read in the `RleDecompress` function due to insufficient data length in the `pbSrcBuffer` variable, potentially causing errors or crashes. Similarly, **CVE-2023-40575** affects FreeRDP with an Out-Of-Bounds Read in the `general_YUV444ToRGB_8u_P3AC4R_BGRX` function, leading to crashes from insufficient data in the `pSrc` variable. Both FreeRDP issues have been addressed in version 3.0.0-beta3, and users are advised to upgrade, as there are no known workarounds.
 
 
-##### Evidence
+##### Evidence.
 
 The *Metasploit Auxiliary Module* was used to scan for vulnerabilities on the rdp server which is shown below:
 

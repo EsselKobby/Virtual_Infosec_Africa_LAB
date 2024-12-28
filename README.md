@@ -379,7 +379,7 @@ The resulted payload was then saved in the *payload.cmd*, The Python server payl
 
 *Table*: *Some Common Vulnerability Findings* 
 
-**Snapshot of the PassCrack Program**
+**Snapshot of the PassCrack Program Project**
 
 ![dictionary attack](/PassCrack/dictionary%20program%20.png)
 

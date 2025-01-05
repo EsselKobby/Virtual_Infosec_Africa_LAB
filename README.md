@@ -4,7 +4,7 @@
 [Virtual Infosec Africa,](https://virtualinfosecafrica.com) [Department of Telecommunications Engineering](https://teleng.knust.edu.gh/)
 ___
 Author:
-Bernard Kobina Forson Essel
+Bernard Kobina Forson Essel.
 
 
 [Source](https://github.com/EsselKobby/Virtual_Infosec_Africa_LAB)

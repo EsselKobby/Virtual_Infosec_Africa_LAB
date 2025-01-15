@@ -79,10 +79,10 @@ The unethical use include unauthorized access to systems, stealing sensitive inf
 This attack systematically tries all possible password combinations until the correct one is found. It is time-consuming but effective for shorter passwords or less complex combinations.
 
 **Dictionary Attack**
-This attack uses a list of common passwords or previously breached passwords. It is faster than brute force attacks but reliess on the passwords being in the list.
+This attack uses a list of common passwords or previously breached passwords. It is faster than brute force attacks but relies on the passwords being in the list.
 
 **Reverse Brute Force Attack**
-This attack uses a common password against a list of potential usernames. It targets accounts where the same password might be used, exploitingn weak password practices.
+This attack uses a common password against a list of potential usernames. It targets accounts where the same password might be used, exploiting weak password practices.
 
 **PROJECT TARGET FILE TYPES**
 
